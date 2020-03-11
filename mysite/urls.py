@@ -17,9 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views
 
+from rest_framework import routers
+from blog_api.views import PostViewSet
+
+
+router = routers.DefaultRouter()
+router.register('post', PostViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/login/', views.login, name='login'),
     path('accounts/logout/', views.logout, name='logout', kwargs={'next_page': '/'}),
+    path('api/', include(router.urls)),
     path('', include('blog.urls')),
 ]
